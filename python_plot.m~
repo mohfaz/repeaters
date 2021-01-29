@@ -1,0 +1,19 @@
+%%
+% depolarization rate for the channel is 1e+4 for memories are 1e+3 the a
+fidelity  = [0.9919999999999999,
+ 0.9689999999999999,
+ 0.9349999999999998,
+ 0.8989999999999999,
+ 0.7249999999999999,
+ 0.5659999999999998,
+ 0.30199999999999994,
+ 0.10099999999999999,
+ 0.027999999999999997];
+
+distance = [0.1, 0.5, 1, 2, 5, 10, 20, 50, 100];
+
+plot(distance, fidelity, 'LineWidth',4)
+xlabel('Distance in km','FontSize',14);
+ylabel('f_0','FontSize',14);
+title('The effect of distance on initial fidelity','FontSize',16)
+grid on;
