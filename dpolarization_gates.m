@@ -17,21 +17,17 @@ total_error = zeros(4,4);
 
 for i = 1:4
     for j = 1:4
-%         if i == 4 && j == 4
-%             continue;
-%         end
+
         total_error = total_error + kron(gates{i},gates{j})*(phi_plus*phi_plus')*kron(gates{i},gates{j})';
     end
 end
 
-% total_error = total_error - phi_plus;
-% total_error = total_error ./ 15;
-% total_error*conj(total_error')
+
 %%
 total_error = zeros(4,4);
 for i = 1:4
     
         total_error = total_error + kron(I,gates{i})*(phi_plus*phi_plus')*kron(I,gates{i})';
-    
+        kron(I,gates{i})*(phi_plus*phi_plus')*kron(I,gates{i})'
 end
 total_error./4;
