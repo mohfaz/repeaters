@@ -1,7 +1,7 @@
 %%
 % depolarization rate for the channel is 1e+2 for memories are 1 the
 %  Photon survival probability per channel length [dB/km] is 0.1.
-[0.9979999999999999,
+fidelity=[0.9979999999999999,
  0.9939999999999999,
  0.9709999999999999,
  0.9569999999999999,
@@ -34,3 +34,12 @@ xlabel('Distance in km','FontSize',14);
 ylabel('f_0','FontSize',14);
 title('The effect of distance on initial fidelity','FontSize',16)
 grid on;
+%%
+hold on
+distances = [1, 5, 10, 20, 50, 100,200];
+probs = exp(-distances./200000.*1000).*exp(-distances./200000.*100);
+plot(distances,probs)
+%%
+eta = @(L) 10^(-0.1*0.2*L) 
+%%
+p = @(L) 0.1*eta(L) 
