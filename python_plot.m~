@@ -45,19 +45,32 @@ eta = @(L) 10^(-0.1*0.2*L)
 p = @(L) 0.1*eta(L) 
 %% The alone processor with sync depolarization error model
 
-fidelity_list = [0.9999999999999999,
- 0.9989999999999999,
- 0.9959999999999999,
- 0.9789999999999999,
- 0.8739999999999999,
- 0.7649999999999999,
- 0.3429999999999999,
- 0.24099999999999996];
+fidelity_list = [0.9998999999999998,
+ 0.9987999999999998,
+ 0.9965999999999998,
+ 0.9849999999999998,
+ 0.8639999999999998,
+ 0.7437999999999999,
+ 0.35179999999999995,
+ 0.25149999999999995];
 
-waiting = [1,1e+3,2e+3,1e+4,1e+5,2e+5,1e+6,1e+9];
+waiting = [1,1e+3,2e+3,1e+4,1e+5,2e+5,1e+6,1e+9].*1e-9;
 
-plot(waiting(1:8, fidelity_list, 'LineWidth',4)
+plot(waiting(1:7), fidelity_list(1:7), 'LineWidth',4)
 xlabel('Time ','FontSize',14);
 ylabel('f_0','FontSize',14);
 title('The effect of memory depilarization on fidelity','FontSize',16)
 grid on;
+hold on
+analytical_fidelity = zeros(1,8);
+
+for i = 1:8
+    prob = 1-exp(-waiting(i)/1e-3);
+    
+    analytical_fidelity(i) = (1-prob*3/4)^2+3*(prob/4)^2;
+end
+
+plot(waiting(1:7),analytical_fidelity(1:7),'-*')
+plot(waiting(1:7),analytical_fidelity(1:7)' - fidelity_list(1:7),'-*')
+
+legend('simulated asyng error','analytical async error')
