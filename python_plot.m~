@@ -54,14 +54,10 @@ fidelity_list = [0.9999999999999999,
  0.3429999999999999,
  0.24099999999999996];
 
-waiting = [1,1e+3,2e+3,1e+4,1e+5,2e+5,1e+6,1e+9].*1e-9;
+waiting = [1,1e+3,2e+3,1e+4,1e+5,2e+5,1e+6,1e+9];
 
-plot(waiting(1:7), fidelity_list(1:7), 'LineWidth',4)
+plot(waiting(1:8, fidelity_list, 'LineWidth',4)
 xlabel('Time ','FontSize',14);
 ylabel('f_0','FontSize',14);
 title('The effect of memory depilarization on fidelity','FontSize',16)
 grid on;
-hold on
-plot(waiting(1:7),exp(-waiting(1:7)./1e-3))
-
-legend('simulated','analytical')
