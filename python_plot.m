@@ -82,8 +82,9 @@ fidelity_list = [0.919945, 0.909385, 0.88037, 0.75431, 0.68326, 0.62268, 0.57304
     title('Purifying with filtring')
     grid on
 %% plot for the puyrify.py for different distance adding several memories
-% for filtering and distilation
-%  number of experiments is 1e+5
+% for filtering and distilation 
+%  number of experiments is 1e+5 
+% NOTE THIS IS BOGUS
 fidelity_list_distilation =[0.988, 0.978, 0.95, 0.811, 0.726, 0.659, 0.608];
 fidelity_list_filtering = [0.991, 0.98, 0.942, 0.801, 0.726, 0.632, 0.595];
 fidelity_list = [0.9949999999999999,
@@ -94,6 +95,8 @@ fidelity_list = [0.9949999999999999,
  0.7499999999999999,
  0.6999999999999998];
 distances = [1,2,5,20,30,40,50]; % in km
+times = [30000.0, 40000.0, 70070.0, 220220.0, 320640.0, 420000.0, 520520.0];
+
 plot(distances,fidelity_list_distilation,'-O','LineWidth',4)
 hold on
 plot(distances,fidelity_list_filtering,'--*','LineWidth',4)
@@ -104,5 +107,65 @@ xlabel('Distance in km ','FontSize',14);
 ylabel('f_0','FontSize',14);
 plot(distances,fidelity_list,'--','LineWidth',4)
 legend({'Distilation','Local Filtering','Just entangling'},'FontSize',14)
+%% plot for purification for sequential purification
+%
+fidelity_list_distilation_10 = [0.983, 0.974, 0.919, 0.776, 0.715, 0.661, 0.587];
+distances = [1,2,5,20,30,40,50];
 
-    
+plot(distances,fidelity_list_distilation_10,'-O','LineWidth',4)
+hold on
+%%
+%% plot for non-optimistic approach and 10 step optimistic
+%
+fidelity_list_distilation_10 = [0.992, 0.984, 0.964, 0.801, 0.719, 0.634, 0.604];
+times_10 = [12000.0, 22044.0, 52000.0, 202202.0, 302000.0, 402000.0, 503506.0];
+fidelity_list_distilation_1 = [0.993, 0.981, 0.946, 0.822, 0.742, 0.668, 0.621];
+times_1 = [12012.0, 22044.0, 52052.0, 202000.0, 302000.0, 402804.0, 505012.0];
+distances = [1,2,5,20,30,40,50];
+figure
+hold on
+plot(distances,fidelity_list_distilation_10,'-O','LineWidth',4)
+plot(distances,fidelity_list_distilation_1,'-*','LineWidth',4)
+grid on
+legend
+hold off
+
+figure
+hold on
+plot(distances,times_10,'-O','LineWidth',4)
+plot(distances,times_1,'-*','LineWidth',4)
+legend
+grid on
+%%
+
+
+%%
+x= categorical({'Bob receives qbits','Bob measures','Alice receives conf. from Bob','Alice measures','Final fidelity'});
+%%
+figure
+grid on
+fidelity = zeros(1,5);
+fidelity_min = zeros(1,5);
+fidelity_max = zeros(1,5);
+fidelity(1) = mean(fbbefore(:,1));
+fidelity(2) = mean(fbafter(:,1));
+fidelity(3) = mean(fabefore(:,1));
+fidelity(4) = mean(faafter(:,1));
+fidelity(5) = mean(ffinal(:,1));
+
+fidelity_min(1) = abs(min(fbbefore(:,1))-fidelity(1));
+fidelity_min(2) = abs(min(fbafter(:,1))-fidelity(2));
+fidelity_min(3) = abs(min(fabefore(:,1))-fidelity(3));
+fidelity_min(4) = abs(min(faafter(:,1))-fidelity(4));
+fidelity_min(5) = abs(min(ffinal(:,1))-fidelity(5));
+
+fidelity_max(1) = abs(max(fbbefore(:,1))-fidelity(1));
+fidelity_max(2) = abs(max(fbafter(:,1))-fidelity(2));
+fidelity_max(3) = abs(max(fabefore(:,1))-fidelity(3));
+fidelity_max(4) = abs(max(faafter(:,1))-fidelity(4));
+fidelity_max(5) = abs(max(ffinal(:,1))-fidelity(5));
+
+errorbar([1:5],fidelity,fidelity_min,fidelity_max,'o')
+%%
+xticks([1:5])
+xticklabels({'Bob receives qbits','Bob measures','Alice receives conf. from Bob','Alice measures','Final fidelity'})
